@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Portfolio, LegSettings, LegExecutionDetails,RequestData
+from .models import Portfolio, LegSettings, LegExecutionDetails, RequestData
 
 class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,12 +16,10 @@ class LegExecutionDetailsSerializer(serializers.ModelSerializer):
         model = LegExecutionDetails
         fields = '__all__'
 
-
-
 class ExecuteFunctionSerializer(serializers.Serializer):
     option = serializers.CharField()
-    legs = serializers.ListField(child=serializers.CharField(), required=False)
-    oppo_leg = serializers.CharField(required=False)
+    legs = serializers.ListField(child=serializers.IntegerField(), required=False)
+    oppo_leg = serializers.IntegerField(required=False)
 
 class RequestDataSerializer(serializers.ModelSerializer):
     class Meta:
