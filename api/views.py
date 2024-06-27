@@ -25,12 +25,17 @@ def execute_on_tp(request):
     serializer = ExecuteFunctionSerializer(data=request.data)
     if serializer.is_valid():
         option = serializer.validated_data['option']
+        legs = serializer.validated_data.get('legs', [])
+        oppo_leg = serializer.validated_data.get('oppo_leg', 0)
         
         if option in ON_TP_FUNCTIONS:
             function_or_partial = ON_TP_FUNCTIONS.get(option)
             if callable(function_or_partial):
                 if 'partial_execute_legs' in option:
-                    legs = serializer.validated_data.get('legs', [])
+                    function_or_partial.keywords['legs'] = legs
+                elif 'partial_reexecute_opposite_leg' in option:
+                    function_or_partial.keywords['oppo_leg'] = oppo_leg
+                elif 'partial_sqoff_legs' in option:
                     function_or_partial.keywords['legs'] = legs
                 function_or_partial()
                 return Response({'status': 'success'}, status=status.HTTP_200_OK)
@@ -47,17 +52,18 @@ def execute_on_sl(request):
     serializer = ExecuteFunctionSerializer(data=request.data)
     if serializer.is_valid():
         option = serializer.validated_data['option']
+        legs = serializer.validated_data.get('legs', [])
+        oppo_leg = serializer.validated_data.get('oppo_leg', 0)
         
         if option in ON_SL_FUNCTIONS:
             function_or_partial = ON_SL_FUNCTIONS.get(option)
             if callable(function_or_partial):
-                if 'partial_sqoff_legs' in option:
-                    legs = serializer.validated_data.get('legs', [])
+                if 'partial_execute_legs' in option:
                     function_or_partial.keywords['legs'] = legs
                 elif 'partial_reexecute_opposite_leg' in option:
-                    oppo_leg = serializer.validated_data.get('oppo_leg', '')
                     function_or_partial.keywords['oppo_leg'] = oppo_leg
-                
+                elif 'partial_sqoff_legs' in option:
+                    function_or_partial.keywords['legs'] = legs
                 function_or_partial()
                 return Response({'status': 'success'}, status=status.HTTP_200_OK)
             else:
