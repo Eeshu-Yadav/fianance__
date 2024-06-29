@@ -51,6 +51,33 @@ class LegSettings(models.Model):
         ('partial_execute_legs', 'partial_execute_legs'),
         ('Pyramiding', 'Pyramiding'),
     )
+    TGT_TYPE_CHOICES = (
+        ('None', 'None'),
+        ('Premium', 'Premium'),
+        ('Underlying', 'Underlying'),
+        ('Strike', 'Strike'),
+        ('AbsolutePremium', 'AbsolutePremium'),
+        ('Delta', 'Delta'),
+        ('Theta', 'Theta'),
+    )
+    SL_TYPE_CHOICES = (
+        ('None', 'None'),
+        ('Premium', 'Premium'),
+        ('Underlying', 'Underlying'),
+        ('Strike', 'Strike'),
+        ('AbsolutePremium', 'AbsolutePremium'),
+        ('Delta', 'Delta'),
+        ('Theta', 'Theta'),
+    )
+    TP_TYPE_CHOICES = (
+        ('None', 'None'),
+        ('Premium', 'Premium'),
+        ('Underlying', 'Underlying'),
+        ('Strike', 'Strike'),
+        ('AbsolutePremium', 'AbsolutePremium'),
+        ('Delta', 'Delta'),
+        ('Theta', 'Theta'),
+    )
 
     portfolio = models.ForeignKey(Portfolio, related_name='leg_settings', on_delete=models.CASCADE)
     state = models.IntegerField(choices=STATE_CHOICES)
@@ -73,6 +100,11 @@ class LegSettings(models.Model):
     on_target = models.CharField(max_length=20, choices=ON_TARGET)
     on_tp = models.CharField(max_length=150, choices=ON_TP_CHOICES, null=True, blank=True)
     on_sl = models.CharField(max_length=150, choices=ON_SL_CHOICES, null=True, blank=True)
+    tgt_type = models.CharField(max_length=20, choices=TGT_TYPE_CHOICES, default='Premium')
+    sl_type = models.CharField(max_length=20, choices=SL_TYPE_CHOICES, default='Premium')
+    tp_type = models.CharField(max_length=20, choices=TP_TYPE_CHOICES, default='Premium')
+
+
 
 class LegExecutionDetails(models.Model):
     sqoff = models.TimeField()
