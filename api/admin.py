@@ -8,7 +8,7 @@ class PortfolioAdmin(admin.ModelAdmin):
 
 @admin.register(LegSettings)
 class LegSettingsAdmin(admin.ModelAdmin):
-    list_display = ('portfolio', 'state', 'right', 'txn', 'execution_time', 'sqoff_time', 'count_sl', 'count_tp', 'target_premium', 'stop_loss', 'take_profit', 'on_target', 'on_tp', 'on_sl')
+    list_display = ('portfolio', 'state', 'right', 'txn', 'execution_time', 'sqoff_time', 'count_sl', 'count_tp', 'target_premium', 'stop_loss', 'take_profit','on_tp', 'on_sl', 'tgt_type', 'sl_type', 'tp_type')
     search_fields = ('portfolio__name', 'right', 'txn')
 
 @admin.register(LegExecutionDetails)

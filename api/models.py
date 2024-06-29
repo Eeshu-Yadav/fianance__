@@ -97,7 +97,6 @@ class LegSettings(models.Model):
     TrailProfitBy = models.FloatField(null=True, blank=True)
     SL_TrailTrigger = models.TextField(null=True, blank=True)
     SL_Trail_Amt = models.TextField(null=True, blank=True)
-    on_target = models.CharField(max_length=20, choices=ON_TARGET)
     on_tp = models.CharField(max_length=150, choices=ON_TP_CHOICES, null=True, blank=True)
     on_sl = models.CharField(max_length=150, choices=ON_SL_CHOICES, null=True, blank=True)
     tgt_type = models.CharField(max_length=20, choices=TGT_TYPE_CHOICES, default='Premium')
